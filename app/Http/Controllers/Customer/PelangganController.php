@@ -26,17 +26,24 @@ class PelangganController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama_pelanggan' => ['required'],
-            'jk_pelanggan' => ['required', 'in:Laki-laki,Perempuan'],
-            'noTelp_pelanggan' => ['required'],
-            'email_pelanggan' => ['required', 'email'],
-            'alamat_pelanggan' => ['required'],
+        $user = Auth::user();
+
+        $request->validate([
+            'nama_pelanggan'    => ['required'],
+            'jk_pelanggan'      => ['required', 'in:Laki-laki,Perempuan'],
+            'noTelp_pelanggan'  => ['required'],
+            'email_pelanggan'   => ['required', 'email'],
+            'alamat_pelanggan'  => ['required'],
         ]);
 
-        $authData = array_merge($validatedData, ['user_id' => Auth::id()]);
-
-        Pelanggan::create($authData);
+        Pelanggan::create([
+            'user_id'           => $user->id,
+            'nama_pelanggan'    => $request->input('nama_pelanggan'),
+            'jk_pelanggan'      => $request->input('jk_pelanggan'),
+            'noTelp_pelanggan'  => $request->input('noTelp_pelanggan'),
+            'email_pelanggan'   => $request->input('email_pelanggan'),
+            'alamat_pelanggan'  => $request->input('alamat_pelanggan'),
+        ]);
 
         return redirect('/customer/pelanggan');
     }

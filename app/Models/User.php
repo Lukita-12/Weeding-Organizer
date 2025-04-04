@@ -60,6 +60,6 @@ class User extends Authenticatable
 
     public function pelanggan(): HasMany
     {
-        return $this->hasMany(Pelanggan::class, 'user_id');
+        return $this->hasMany(Pelanggan::class);
     }
 }

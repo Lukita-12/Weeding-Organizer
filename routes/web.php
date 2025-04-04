@@ -101,17 +101,27 @@ Route::prefix('admin')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::controller(CustomerPelangganController::class)->group(function () {
         Route::get('/pelanggan', 'index')                   ->name('customer.pelanggan.index');
-        Route::get('/pelanggan/create', 'create')           ->name('customer.pelanggan.create')->middleware('auth');
-        Route::post('/pelanggan', 'store')                  ->name('customer.pelanggan.store')->middleware('auth');
+        Route::get('/pelanggan/create', 'create')
+            ->middleware('auth')
+            ->name('customer.pelanggan.create');
+        Route::post('/pelanggan', 'store')
+            ->middleware('auth')
+            ->name('customer.pelanggan.store');
         Route::get('/pelanggan/{pelanggan}/edit', 'edit')   ->name('customer.pelanggan.edit');
-        Route::put('/pelanggan/{pelanggan}', 'update')      ->name('customer.pelanggan.update')->middleware('auth');
+        Route::put('/pelanggan/{pelanggan}', 'update')
+            ->middleware('auth')
+            ->name('customer.pelanggan.update');
         Route::delete('/pelanggan/{pelanggan}', 'destroy')  ->name('customer.pelanggan.destroy');
     });
 
     Route::controller(CustomerRequestmitraController::class)->group(function () {
         Route::get('/requestmitra', 'index')                    ->name('customer.requestmitra.index');
-        Route::get('/requestmitra/create', 'create')            ->name('customer.requestmitra.create')->middleware('auth');
-        Route::post('/requestmitra', 'store')                   ->name('customer.requestmitra.store');
+        Route::get('/requestmitra/create', 'create')
+            ->middleware('auth')
+            ->name('customer.requestmitra.create');
+        Route::post('/requestmitra', 'store')
+            ->middleware('auth')
+            ->name('customer.requestmitra.store');
         Route::get('/requestmitra/{requestmitra}/edit', 'edit') ->name('customer.requestmitra.edit');
         Route::put('/requestmitra/{requestmitra}', 'update')    ->name('customer.requestmitra.update');
         Route::delete('/requestmitra/{requestmitra}', 'destroy')->name('customer.requestmitra.destroy');

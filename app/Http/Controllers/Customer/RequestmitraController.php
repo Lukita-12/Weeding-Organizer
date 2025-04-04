@@ -12,36 +12,45 @@ class RequestmitraController extends Controller
 {
     public function index()
     {
-        // by adding whereHas() to filter only records where the related pelanggan belongs to the logged-in user
-        $requestmitras = Requestmitra::whereHas('pelanggan', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->with('pelanggan')->latest()->get();
-
-        return view('/customer.requestmitra.index', [
-            'requestmitras' => $requestmitras
-        ]);
+        return view('/customer.requestmitra.index');
     }
 
     public function create()
     {
-        $pelanggans = Pelanggan::where('user_id', Auth::id())->latest()->get();
+        $user       = Auth::user();
+        $customer   = $user->pelanggan;
+        
+        // Determine if the user has customer data
+        $hasCustomer = $customer !==null;
 
         return view('/customer.requestmitra.create', [
-            'pelanggans' => $pelanggans,
+            'hasCustomer' => $hasCustomer,
         ]);
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'pelanggan_id' => ['required', 'exists:pelanggan,id'],
-            'nama_usaha' => ['required'],
-            'jenis_usaha' => ['required'],
-            'nama_pemilik' => ['required'],
+        $user       = Auth::user();
+        $customer   = $user->pelanggan;
+
+        // Double-check the user has a customer profile
+        if (!$customer) {
+            return redirect()->route('customer.pelanggan.create')->with('error', 'Buat informasi customer terlebih dahulu.');
+        }
+
+        $request->validate([
+            'nama_usaha'    => ['required'],
+            'jenis_usaha'   => ['required'],
+            'nama_pemilik'  => ['required'],
 
         ]);
 
-        Requestmitra::create($validatedData);
+        Requestmitra::create([
+            'pelanggan_id'  => $customer->id,
+            'nama_usaha'    => $request->input('nama_usaha'),
+            'jenis_usaha'   => $request->input('jenis_usaha'),
+            'nama_pemilik'  => $request->input('nama_pemilik'),
+        ]);
 
         return redirect('/customer/requestmitra');
     }
