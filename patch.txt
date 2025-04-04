@@ -1,0 +1,164 @@
++ Create Migration(Pelanggan)
+
++ Create Admin-Pelanggan
+--> Migration = Pelanggan
+--> Model = Pelanggan
+--> Factory = Pelanggan
+--> Controller = index, create, store 
+--> Route = index, create, store
+--> View = index, create
+
++ Create User Register
+--> Migration = Add field for role(admin, customer)
+--> Model = Add fillable field role
+--> Factory = Add fake role
+--> Seeder = Add password & role
+--> Controller = RegisteredUser(SigIn) = function create, store
+--> Route = RegisteredUser(SigIn) = Route create & store
+--> View = Register
+
++ Create User-logout
+--> Controller = Add sessioncontroller => function destroy
+--> Route = Add link it to destroy => method "POST"
+--> View = Use form attributes with methode = "POST"
+
++ Create User-login
+--> Controller = sessioncontroller => function create, store
+--> Route = Add create and store
+--> View = Add login
+
+March-27
+<> Admin-Pelanggan
+--> controller(edit. update, destroy)
+--> View(Edit)
+--> Route(Edit, update delete)
+
+<> Migration(Pelanggan)
+--> Migration = foreign_key to table User
+--> Factory = foreign_key for user_id
+--> Model = Pelanggan(belongsTo) User(hasMany)
+
+<> Admin-Pelanggan(Pelanggan(F) to User(P))
+--> Controller = store, update, create, edit
+--> View = Create, Edit
+
++ Create Customer-Pelanggan
+--> Controller(Index, create, store, edit, update, delete)
+--> Route(Index, create, store, edit, update, delete)
+--> view(Index, create, edit)
+
++ Add Middleware Customer-Pelanggan
+--> Route(create, store, edit, update, destroy)
+
+<> Migration(Pelanggan)
+--> Migration(more field for Pelanggan)
+--> Factory(more faker for new field)
+----> Admin-Pelanggan Controller(Store, update)
+----> Admin-Pelanggan View(Create, edit, index)
+
+<> Customer-Pelanggan
+--> Controller(Store, update)
+--> View(Create, edit, index)
+
+<> Migration(RequestMitra)
+--> Migration()
+--> Model()
+--> Factory()
+
+<> Admin-RequestMitra
+--> Controller(Index, create, store, edit, update, destroy)
+--> Route(Index, create, store, edit, update, destroy)
+--> View(index, create, edit)
+
+<> Pelanggan-RequestMitra
+--> Controller(Index, create, store, edit, update, destroy)
+--> Route(Index, create, store, edit, update, destroy)
+--> View(index, create, edit)
+
+!XX! UPDATE(RequestMitra)
+<!!> MODEL
+--> Customer (CustomerRequestMitra => Customer/RequestMitra)
+--> Admin (AdminRequestMitra => Admin/RequestMitra)
+<!!> ROUTE
+--> Customer (Use prefix and use "as" for controller alias)
+--> Admin (Use prefix and use "as" for controller alias)
+<!!> VIEW
+--> Customer (Rename url('') and route(''))
+--> Admin (Rename url('') and route(''))
+
+!XX! UPDATE(Pelanggan)
+<!!> MODEL
+--> Customer (CustomerPelanggan => Customer/Pelanggan)
+--> Admin (AdminPelanggan => Admin/Pelanggan)
+<!!> ROUTE
+--> Customer (Use prefix and use "as" for controller alias)
+--> Admin (Use prefix and use "as" for controller alias)
+<!!> VIEW
+--> Customer (Rename url('') and route(''))
+--> Admin (Rename url('') and route(''))    
+
+<> Key eloquent(RequestMitra(F) & Pelanggan(P))
+--> Migration = foreign_key in table RequestMitra
+--> Factory = foreign_key for user_id
+--> Model = Pelanggan(belongsTo) User(hasMany)
+
+<> Admin-Pelanggan(Pelanggan(F) to User(P))
+--> Controller = create, store, edit, update, destroy
+--> View = Index, create, Edit
+
+<> Customer-Pelanggan(Pelanggan(F) to User(P))
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+<> Migration(Kerjasama) & Key Eloquent(Kerjasama(F)->RequestMitra(P) & Pelanggan(P))
+--> Migration
+--> Model
+--> Factory
+
+<> Admin-Kerjasama
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+<> Customer-Kerjasama
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+<> Migration-Pesanan
+--> Migration
+--> Model
+--> Factory
+
+<> Admin-Pesanan
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+<> Customer-Pesanan
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+Migration Paket Pernikahan
+--> Migration
+--> Model
+--> Factory
+
+<> Admin-Pesanan
+--> Controller = create, store, edit, update, destroy
+--> View = Index, Create, Edit
+
+Eloquent key for Paket pernikahan to Kerjasama
+--> Pivot table
+--> Migration pivot table
+--> Model (kerjasama & paket pernikahan)
+
+<> Admin-Paket Pernikhana = re. Fix
+--> Controller (Index, create, store, update, delete)
+--> Update (Index, create, store, update, delete)
+
+<> Migration, Factory, & Model
+---> Bank, Pembayaran, pembayaran_bank(pivot)
+
+<> Controller view & route
+--> Admin-Pembayaran
+--> Admin-Bank
+
+<> Paket >> Pesan >> Bayar
