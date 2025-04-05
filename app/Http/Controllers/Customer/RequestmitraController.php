@@ -18,38 +18,40 @@ class RequestmitraController extends Controller
     public function create()
     {
         $user       = Auth::user();
-        $customer   = $user->pelanggan;
+        $customers   = $user->pelanggan;
         
         // Determine if the user has customer data
-        $hasCustomer = $customer !==null;
+        $hasCustomer = $customers->isNotEmpty();
 
         return view('/customer.requestmitra.create', [
             'hasCustomer' => $hasCustomer,
+            'customers'     => $customers
         ]);
     }
 
     public function store(Request $request)
     {
-        $user       = Auth::user();
-        $customer   = $user->pelanggan;
+        $user = Auth::user();
 
-        // Double-check the user has a customer profile
-        if (!$customer) {
-            return redirect()->route('customer.pelanggan.create')->with('error', 'Buat informasi customer terlebih dahulu.');
-        }
-
-        $request->validate([
-            'nama_usaha'    => ['required'],
+        $validatedData = $request->validate([
+            'pelanggan_id'  => ['required', 'exists:pelanggan,id'],
+            'nama_usaha'    => ['required', 'string', 'max:254'],
             'jenis_usaha'   => ['required'],
             'nama_pemilik'  => ['required'],
-
         ]);
 
+        $customer = $user->pelanggan->where('id', $validatedData['pelanggan_id'])->first();
+        if (!$customer) {
+            return redirect()->back()->withErrors([
+                'pelanggan_id' => 'Informasi pelanggan yang dipilih bukan milik anda!',
+            ]);
+        }
+
         Requestmitra::create([
-            'pelanggan_id'  => $customer->id,
-            'nama_usaha'    => $request->input('nama_usaha'),
-            'jenis_usaha'   => $request->input('jenis_usaha'),
-            'nama_pemilik'  => $request->input('nama_pemilik'),
+            'pelanggan_id'  => $validatedData['pelanggan_id'],
+            'nama_usaha'    => $validatedData['nama_usaha'],
+            'jenis_usaha'   => $validatedData['jenis_usaha'],
+            'nama_pemilik'  => $validatedData['nama_pemilik'],
         ]);
 
         return redirect('/customer/requestmitra');

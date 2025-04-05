@@ -4,20 +4,23 @@
         <h1>Permintaan kerjasama</h1>
     </div>
 
-    @if (!$hasCustomer)
-        <div>
-            <p>Informasi pelanggan diperlukan</p>
-            <p>Informasi pelanggan perlu diisikan sebelum mengajukan permintaan kerjasama</p>
-            <a href="{{ route('customer.pelanggan.create') }}">
-                Buat informasi pelanggan
-            </a>
-        </div>
-    @endif
-
     <div>
+        @if ($hasCustomer)
         <x-form.form-layout action="{{ route('customer.requestmitra.store') }}">
-            <fieldset @disabled(!$hasCustomer) class="{{ !$hasCustomer ? 'opacity-50' : '' }}">
-        
+
+            <div>
+                <x-form.form-label for="pelanggan">
+                        Informasi pelanggan
+                    </x-form.form-label>
+                <x-form.form-select
+                    name="pelanggan_id" id="pelanggan_id"
+                    required>
+                    @foreach ($customers as $customer)
+                        <option value="{{ $customer->id }}">{{ $customer->nama_pelanggan }}</option>
+                    @endforeach
+                </x-form.form-select>
+            </div>
+
                 <div>
                     <x-form.form-label for="nama_usaha">
                         Nama usaha
@@ -60,8 +63,16 @@
                     <button type="submit">Simpan</button>
                 </div>
 
-            </fieldset>
         </x-form.form-layout>
+        @else
+        <div>
+            <p>Informasi pelanggan diperlukan</p>
+            <p>Informasi pelanggan perlu diisikan sebelum mengajukan permintaan kerjasama</p>
+            <a href="{{ route('customer.pelanggan.create') }}">
+                Buat informasi pelanggan
+            </a>
+        </div>
+        @endif
     </div>
 
 </x-layout>
