@@ -9,12 +9,26 @@ use Illuminate\Http\Request;
 
 class RequestmitraController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $requestmitras = Requestmitra::with('pelanggan')->latest()->paginate(6);
+        $query = Requestmitra::with('pelanggan');
+
+        // Filter
+        if ($request->filled('status_request')) {
+            $query->where('status_request', $request->status_request);
+        }
+
+        // Sorting
+        $sortBy     = $request->input('sort_by', 'created_at');
+        $sortOrder  = $request->input('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+        
+        $requestmitras = $query->paginate(6)->withQueryString();
         
         return view('/admin.requestmitra.index', [
-            'requestmitras' => $requestmitras
+            'requestmitras' => $requestmitras,
+            'sortBy'        => $sortBy,
+            'sortOrder'     => $sortOrder
         ]);
     }
 
@@ -85,7 +99,7 @@ class RequestmitraController extends Controller
         $requestmitra->status_request = 'Diterima';
         $requestmitra->save();
 
-        return redirect('/admin/requestmitra');
+        return redirect('/admin/requestmitra')->with('sukses', 'Permintaan kerjasama telah diterima');
     }
 
     public function reject(Requestmitra $requestmitra)
