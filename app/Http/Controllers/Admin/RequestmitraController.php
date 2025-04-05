@@ -11,7 +11,7 @@ class RequestmitraController extends Controller
 {
     public function index()
     {
-        $requestmitras = Requestmitra::latest()->paginate(6);
+        $requestmitras = Requestmitra::with('pelanggan')->latest()->paginate(6);
         
         return view('/admin.requestmitra.index', [
             'requestmitras' => $requestmitras
@@ -76,6 +76,22 @@ class RequestmitraController extends Controller
     public function destroy(Requestmitra $requestmitra)
     {
         $requestmitra->delete();
+
+        return redirect('/admin/requestmitra');
+    }
+
+    public function accept(Requestmitra $requestmitra)
+    {
+        $requestmitra->status_request = 'Diterima';
+        $requestmitra->save();
+
+        return redirect('/admin/requestmitra');
+    }
+
+    public function reject(Requestmitra $requestmitra)
+    {
+        $requestmitra->status_request = 'Ditolak';
+        $requestmitra->save();
 
         return redirect('/admin/requestmitra');
     }

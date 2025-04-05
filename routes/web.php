@@ -47,6 +47,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/requestmitra', 'index')
             ->middleware(['auth', 'admin'])
             ->name('admin.requestmitra.index');
+        Route::put('requestmitra/{requestmitra}/accept', 'accept')
+            ->middleware(['auth', 'admin'])
+            ->name('admin.requestmitra.accept');
+        Route::put('requestmitra/{requestmitra}/reject', 'reject')
+            ->middleware(['auth', 'admin'])
+            ->name('admin.requestmitra.reject');
         Route::get('/requestmitra/create', 'create')->name('admin.requestmitra.create');
         Route::post('/requestmitra', 'store')->name('admin.requestmitra.store');
         Route::get('/requestmitra/{requestmitra}/edit', 'edit')->name('admin.requestmitra.edit');
