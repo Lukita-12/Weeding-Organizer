@@ -13,6 +13,6 @@ class KerjasamaSeeder extends Seeder
      */
     public function run(): void
     {
-        Kerjasama::factory(8)->create();
+        Kerjasama::factory(5)->create();
     }
 }

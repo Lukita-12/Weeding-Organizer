@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_usaha');
             $table->string('jenis_usaha');
             $table->string('nama_pemilik');
+            $table->enum('status_request', ['Ditunggu', 'Diterima', 'Ditolak'])->default('Ditunggu');
             $table->timestamps();
         });
     }
