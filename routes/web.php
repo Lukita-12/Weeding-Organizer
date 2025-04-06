@@ -130,34 +130,53 @@ Route::prefix('customer')->group(function () {
     });
 
     Route::controller(CustomerRequestmitraController::class)->group(function () {
-        Route::get('/requestmitra', 'index')                    ->name('customer.requestmitra.index');
+        Route::get('/requestmitra', 'index')
+            ->name('customer.requestmitra.index');
         Route::get('/requestmitra/create', 'create')
             ->middleware('auth')
             ->name('customer.requestmitra.create');
         Route::post('/requestmitra', 'store')
             ->middleware('auth')
             ->name('customer.requestmitra.store');
-        Route::get('/requestmitra/{requestmitra}/edit', 'edit') ->name('customer.requestmitra.edit');
-        Route::put('/requestmitra/{requestmitra}', 'update')    ->name('customer.requestmitra.update');
-        Route::delete('/requestmitra/{requestmitra}', 'destroy')->name('customer.requestmitra.destroy');
+        Route::get('/requestmitra/{requestmitra}/edit', 'edit')
+            ->middleware('auth')
+            ->name('customer.requestmitra.edit');
+        Route::put('/requestmitra/{requestmitra}', 'update')
+            ->middleware('auth')
+            ->name('customer.requestmitra.update');
+        Route::delete('/requestmitra/{requestmitra}', 'destroy')
+            ->middleware('auth')
+            ->name('customer.requestmitra.destroy');
     });
 
     Route::controller(CustomerKerjasamaController::class)->group(function () {
-        Route::get('/kerjasama', 'index')                   ->name('customer.kerjasama.index');
-        Route::get('/kerjasama/create', 'create')           ->name('customer.kerjasama.create');
-        Route::post('/kerjasama', 'store')                  ->name('customer.kerjasama.store');
-        Route::get('/kerjasama/{kerjasama}/edit', 'edit')   ->name('customer.kerjasama.edit');
-        Route::put('/kerjasama/{kerjasama}', 'update')      ->name('customer.kerjasama.update');
-        Route::delete('/kerjasama/{kerjasama}', 'destroy')  ->name('customer.kerjasama.destroy');
+        Route::get('/kerjasama', 'index')
+            ->name('customer.kerjasama.index');
+        Route::get('/kerjasama/create', 'create')
+            ->name('customer.kerjasama.create');
+        Route::post('/kerjasama', 'store')
+            ->name('customer.kerjasama.store');
+        Route::get('/kerjasama/{kerjasama}/edit', 'edit')
+            ->name('customer.kerjasama.edit');
+        Route::put('/kerjasama/{kerjasama}', 'update')
+            ->name('customer.kerjasama.update');
+        Route::delete('/kerjasama/{kerjasama}', 'destroy')
+            ->name('customer.kerjasama.destroy');
     });
 
     Route::controller(CustomerPaketPernikahanController::class)->group(function () {
-        Route::get('/paket-pernikahan', 'index')                        ->name('customer.paket_pernikahan.index');
-        Route::get('/paket-pernikahan/create', 'create')                ->name('customer.paket_pernikahan.create');
-        Route::post('/paket-pernikahan', 'store')                       ->name('customer.paket_pernikahan.store');
-        Route::get('/paket-pernikahan/{paketPernikahan}/edit', 'edit')  ->name('customer.paket_pernikahan.edit');
-        Route::put('/paket-pernikahan/{paketPernikahan}', 'update')     ->name('customer.paket_pernikahan.update');
-        Route::delete('/paket-pernikahan/{paketPernikahan}', 'destroy') ->name('customer.paket_pernikahan.destroy');
+        Route::get('/paket-pernikahan', 'index')
+            ->name('customer.paket_pernikahan.index');
+        Route::get('/paket-pernikahan/create', 'create')
+            ->name('customer.paket_pernikahan.create');
+        Route::post('/paket-pernikahan', 'store')
+            ->name('customer.paket_pernikahan.store');
+        Route::get('/paket-pernikahan/{paketPernikahan}/edit', 'edit')
+            ->name('customer.paket_pernikahan.edit');
+        Route::put('/paket-pernikahan/{paketPernikahan}', 'update')
+            ->name('customer.paket_pernikahan.update');
+        Route::delete('/paket-pernikahan/{paketPernikahan}', 'destroy')
+            ->name('customer.paket_pernikahan.destroy');
     });
 
     Route::controller(CustomerPesananController::class)->group(function () {

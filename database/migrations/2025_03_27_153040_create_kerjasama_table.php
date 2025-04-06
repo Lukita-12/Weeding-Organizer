@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('kerjasama', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Requestmitra::class);
-            $table->foreignIdFor(Pelanggan::class);
+            $table->foreignIdFor(Requestmitra::class)->constrained();
+            $table->foreignIdFor(Pelanggan::class)->constrained();
             $table->string('noTelp_usaha');
             $table->string('email_usaha');
             $table->string('alamat_usaha');
