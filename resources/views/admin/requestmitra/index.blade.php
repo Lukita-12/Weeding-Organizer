@@ -75,6 +75,7 @@
                                     @endif
                                 </div>
                                 <div>
+                                    <a href="{{ route('admin.requestmitra.show', $requestmitra->id) }}">Lihat</a>
                                     <a href="{{ route('admin.requestmitra.edit', $requestmitra->id) }}">Edit</a>
                                     <form method="POST" action="{{ route('admin.requestmitra.destroy', $requestmitra->id) }}">
                                         @csrf

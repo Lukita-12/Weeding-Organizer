@@ -72,7 +72,12 @@ class RequestmitraController extends Controller
      */
     public function show(Requestmitra $requestmitra)
     {
-        //
+        // Eager load customer relationship just in case
+        $requestmitra->load('pelanggan');
+
+        return view('/admin.requestmitra.show', [
+            'requestmitra' => $requestmitra,
+        ]);
     }
 
     public function edit(Requestmitra $requestmitra)

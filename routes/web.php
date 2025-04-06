@@ -53,8 +53,15 @@ Route::prefix('admin')->group(function () {
         Route::put('requestmitra/{requestmitra}/reject', 'reject')
             ->middleware(['auth', 'admin'])
             ->name('admin.requestmitra.reject');
-        Route::get('/requestmitra/create', 'create')->name('admin.requestmitra.create');
-        Route::post('/requestmitra', 'store')->name('admin.requestmitra.store');
+        Route::get('/requestmitra/create', 'create')
+            ->middleware(['auth', 'admin'])
+            ->name('admin.requestmitra.create');
+        Route::post('/requestmitra', 'store')
+            ->middleware(['auth', 'admin'])
+            ->name('admin.requestmitra.store');
+        Route::get('/requestmitra/{requestmitra}', 'show')
+            ->middleware(['auth', 'admin'])
+            ->name('admin.requestmitra.show');
         Route::get('/requestmitra/{requestmitra}/edit', 'edit')->name('admin.requestmitra.edit');
         Route::put('/requestmitra/{requestmitra}', 'update')->name('admin.requestmitra.update');
         Route::delete('/requestmitra/{requestmitra}', 'destroy')->name('admin.requestmitra.destroy');
