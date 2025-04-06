@@ -22,6 +22,18 @@ class RequestmitraController extends Controller
         $sortBy     = $request->input('sort_by', 'created_at');
         $sortOrder  = $request->input('sort_order', 'desc');
         $query->orderBy($sortBy, $sortOrder);
+
+        // Search
+        if ($request->filled('search_request')) {
+            $searchRequest = $request->search_request;
+
+            $query->where(function ($q) use ($searchRequest) {
+                $q->where('nama_usaha', 'like', "%{$searchRequest}%")
+                  ->orWhereHas('pelanggan', function ($q2) use ($searchRequest) {
+                    $q2->where('nama_pelanggan', 'like', "%{$searchRequest}");
+                  });
+            });
+        }
         
         $requestmitras = $query->paginate(6)->withQueryString();
         

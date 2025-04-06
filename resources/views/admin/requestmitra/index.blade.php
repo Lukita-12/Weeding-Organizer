@@ -22,6 +22,14 @@
                     <option value="Ditolak" @selected(request('status_request') === 'Ditolak')>Ditolak</option>
                 </select>
             </form>
+
+            <form method="GET" action="{{ route('admin.requestmitra.index') }}">
+                <input type="text"
+                    name="search_request"
+                    value="{{ request('search_request') }}" placeholder="Search..."
+                    class="" />
+                    <button type="submit">Cari</button>
+            </form>
         </div>
         
         <div>
@@ -51,7 +59,7 @@
                             <td>
                                 <div>
                                     @if ($requestmitra->status_request !== 'Diterima')
-                                        <form method="POST" action="{{ route('admin.requestmitra.accept', $requestmitra->id) }}">
+                                        <form method="POST" action="{{ route('admin.requestmitra.accept', $requestmitra->id) }}" onsubmit="return confirm('Apakah anda yakin untuk menerima permintaan kerjasama?')">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit">Terima</button>
@@ -59,7 +67,7 @@
                                     @endif
 
                                     @if ($requestmitra->status_request !== 'Ditolak')
-                                        <form method="POST" action="{{ route('admin.requestmitra.reject', $requestmitra->id) }}">
+                                        <form method="POST" action="{{ route('admin.requestmitra.reject', $requestmitra->id) }}" onsubmit="return confirm('Apakah anda yakin untuk menolak permintaan kerjasama?')">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit">Tolak</button>
