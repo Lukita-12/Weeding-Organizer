@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('requestmitra', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Pelanggan::class)->constrained();
+            $table->foreignIdFor(Pelanggan::class)->nullable()->constrained()->nullOnDelete();
             $table->string('nama_usaha');
             $table->string('jenis_usaha');
             $table->string('nama_pemilik');

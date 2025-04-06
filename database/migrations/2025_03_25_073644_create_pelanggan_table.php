@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('pelanggan', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->string('nama_pelanggan');
             $table->enum('jk_pelanggan', ['Laki-laki', 'Perempuan'])->default('Laki-laki');
             $table->string('noTelp_pelanggan');

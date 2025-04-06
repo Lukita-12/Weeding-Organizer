@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('kerjasama', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Requestmitra::class)->constrained();
-            $table->foreignIdFor(Pelanggan::class)->constrained();
-            $table->string('noTelp_usaha');
-            $table->string('email_usaha');
-            $table->string('alamat_usaha');
-            $table->decimal('harga01', 15, 2);
-            $table->text('ket_harga01');
-            $table->decimal('harga02', 15, 2);
-            $table->text('ket_harga02');
+            $table->foreignIdFor(Requestmitra::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Pelanggan::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('noTelp_usaha')->nullable();
+            $table->string('email_usaha')->nullable();
+            $table->string('alamat_usaha')->nullable();
+            $table->decimal('harga01', 15, 2)->nullable();
+            $table->text('ket_harga01')->nullable();
+            $table->decimal('harga02', 15, 2)->nullable();
+            $table->text('ket_harga02')->nullable();
             $table->timestamps();
         });
     }
