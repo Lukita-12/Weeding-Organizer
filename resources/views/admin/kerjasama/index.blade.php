@@ -7,6 +7,7 @@
             <table>
                 <thead>
                     <tr>
+                        <td>ID</td>
                         <td>No. Telpon/WA usaha</td>
                         <td>Email usaha</td>
                         <td>Alamat usaha</td>

@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pelanggan;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+    use AuthorizesRequests;
+    
     public function index()
     {
         $pelanggans = Pelanggan::latest()->simplePaginate(6);
@@ -57,6 +60,8 @@ class PelangganController extends Controller
 
     public function edit(Pelanggan $pelanggan)
     {
+        $this->authorize('update', $pelanggan);
+        
         $users = User::where('role', 'customer')->latest()->get();
 
         return view('/admin.pelanggan.edit', [
@@ -67,6 +72,8 @@ class PelangganController extends Controller
 
     public function update(Request $request, Pelanggan $pelanggan)
     {
+        $this->authorize('update', $pelanggan);
+        
         $validatedData = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
             'nama_pelanggan' => ['required'],

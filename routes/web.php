@@ -153,14 +153,19 @@ Route::prefix('customer')->group(function () {
         Route::get('/kerjasama', 'index')
             ->name('customer.kerjasama.index');
         Route::get('/kerjasama/create', 'create')
+            ->middleware('auth')
             ->name('customer.kerjasama.create');
         Route::post('/kerjasama', 'store')
+            ->middleware('auth')
             ->name('customer.kerjasama.store');
         Route::get('/kerjasama/{kerjasama}/edit', 'edit')
+            ->middleware('auth')
             ->name('customer.kerjasama.edit');
         Route::put('/kerjasama/{kerjasama}', 'update')
+            ->middleware('auth')
             ->name('customer.kerjasama.update');
         Route::delete('/kerjasama/{kerjasama}', 'destroy')
+            ->middleware('auth')
             ->name('customer.kerjasama.destroy');
     });
 

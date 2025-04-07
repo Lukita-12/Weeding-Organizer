@@ -5,38 +5,6 @@
             @method('PUT')
 
             <div>
-                <x-form.form-label for="pelanggan_id">
-                    Pelanggan
-                </x-form.form-label>
-                <x-form.form-select
-                    name="pelanggan_id"
-                    id="pelanggan_id"
-                    required>
-                    <option value="{{ $kerjasama->pelanggan_id }}">{{ $kerjasama->pelanggan->nama_pelanggan }}</option>
-                    @foreach ($pelanggans as $pelanggan)
-                        <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama_pelanggan }}</option>
-                    @endforeach                    
-                </x-form.form-select>
-                <x-form.form-error errorFor="pelanggan_id" />
-            </div>
-
-            <div>
-                <x-form.form-label for="requestmitra_id">
-                    Request mitra
-                </x-form.form-label>
-                <x-form.form-select
-                    name="requestmitra_id"
-                    id="requestmitra_id"
-                    required>
-                    <option value="{{ $kerjasama->requestmitra_id }}">{{ $kerjasama->requestmitra->nama_usaha }}</option>
-                    @foreach ($requestmitras as $requestmitra)
-                        <option value="{{ $requestmitra->id }}">{{ $requestmitra->nama_usaha }}</option>
-                    @endforeach                    
-                </x-form.form-select>
-                <x-form.form-error errorFor="requestmitra_id" />
-            </div>
-        
-            <div>
                 <x-form.form-label for="noTelp_usaha">
                     No. Telpon/WA usaha
                 </x-form.form-label>

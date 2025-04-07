@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Requestmitra::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Pelanggan::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('nama_pemilik');
+            $table->string('nama_usaha');
+            $table->string('jenis_usaha');
             $table->string('noTelp_usaha')->nullable();
             $table->string('email_usaha')->nullable();
             $table->string('alamat_usaha')->nullable();

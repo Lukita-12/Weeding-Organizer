@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kerjasama;
 use App\Models\Pelanggan;
 use App\Models\Requestmitra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequestmitraController extends Controller
 {
@@ -113,8 +115,27 @@ class RequestmitraController extends Controller
 
     public function accept(Requestmitra $requestmitra)
     {
-        $requestmitra->status_request = 'Diterima';
-        $requestmitra->save();
+        DB::transaction(function () use ($requestmitra) {
+            // 1. Update status            
+            $requestmitra->update(['status_request' => 'Diterima']);
+
+            // 2. Create new kerjasama
+            Kerjasama::create([
+            'requestmitra_id'   => $requestmitra->id,
+            'pelanggan_id'      => $requestmitra->pelanggan_id,
+            'nama_pemilik'      => $requestmitra->nama_pemilik,
+            'nama_usaha'        => $requestmitra->nama_usaha,
+            'jenis_usaha'       => $requestmitra->jenis_usaha,
+            // leave it null for now
+            'noTelp_usaha'      => null,
+            'email_usaha'       => null,
+            'alamat_usaha'      => null,
+            'harga01'           => null,
+            'ket_harga01'       => null,
+            'harga02'           => null,
+            'ket_harga02'       => null,
+            ]);
+        });
 
         return redirect('/admin/requestmitra')->with('sukses', 'Permintaan kerjasama telah diterima');
     }
